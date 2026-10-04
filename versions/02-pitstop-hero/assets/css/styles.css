@@ -1,0 +1,1106 @@
+/* ============================================================
+   Bulimba Service Centre — "Blueprint"
+   The page is a drafting sheet: cyan linework on deep navy,
+   annotated the way an engineering drawing is annotated.
+   ============================================================ */
+
+:root {
+  /* Ink & paper */
+  --ink:        #07101E;  /* the board */
+  --navy:       #0C1A2E;  /* raised panel */
+  --navy-soft:  #112440;  /* hover / inset */
+
+  /* Linework */
+  --cyan:       #35A7FF;  /* the drawn line — from their logo */
+  --cyan-bright:#7FC9FF;  /* emphasis */
+  --cyan-dim:   #1F5584;  /* construction lines */
+  --cyan-ghost: #14314E;  /* grid */
+
+  /* Lettering */
+  --paper:      #E8EEF6;  /* drafting white */
+  --paper-mute: #93A7BF;  /* secondary */
+  --paper-faint:#5C738F;  /* annotation */
+
+  /* The one warm thing on a cold sheet: the action */
+  --amber:      #FFB547;
+  --amber-deep: #C97F12;
+
+  --rule: 1px solid var(--cyan-ghost);
+
+  --shell: 1240px;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+
+  --display: "Saira Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* The drafting grid — fine 10px cells inside coarse 90px blocks */
+.sheet-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--cyan-ghost) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyan-ghost) 1px, transparent 1px),
+    linear-gradient(rgba(20, 49, 78, .45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 49, 78, .45) 1px, transparent 1px);
+  background-size: 90px 90px, 90px 90px, 10px 10px, 10px 10px;
+  opacity: .5;
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 20%, transparent 85%);
+}
+
+/* ---------- Shared type ---------- */
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+
+/* The annotation voice — every number, label and spec on the sheet */
+.anno {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Title block (header) ---------- */
+
+.titleblock {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(7, 16, 30, .82);
+  backdrop-filter: blur(12px);
+  border-bottom: var(--rule);
+}
+
+.titleblock__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  min-height: 88px;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.mark img {
+  display: block;
+  width: auto;
+  height: 58px;
+}
+
+@media (max-width: 520px) { .mark img { height: 46px; } }
+
+.nav {
+  display: flex;
+  gap: clamp(1rem, 2.4vw, 2rem);
+}
+
+.nav a {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-mute);
+  text-decoration: none;
+  padding-block: 0.4rem;
+  position: relative;
+  transition: color .18s ease;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .22s ease;
+}
+
+.nav a:hover { color: var(--paper); }
+.nav a:hover::after { transform: scaleX(1); }
+
+@media (max-width: 860px) { .nav { display: none; } }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.btn--call {
+  background: var(--amber);
+  color: #241503;
+  font-weight: 600;
+}
+.btn--call:hover { background: #FFC976; }
+
+.btn--line {
+  border-color: var(--cyan-dim);
+  color: var(--cyan-bright);
+  background: transparent;
+}
+.btn--line:hover { border-color: var(--cyan); background: rgba(53, 167, 255, .08); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(3rem, 8vw, 6rem) clamp(3rem, 7vw, 5rem);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .hero__grid { grid-template-columns: 1fr; }
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero__eyebrow::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, var(--cyan-dim), transparent);
+}
+
+.hero h1 {
+  font-size: clamp(2.9rem, 8.2vw, 5.75rem);
+  line-height: 0.9;
+  letter-spacing: -0.012em;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--cyan);
+}
+
+.hero__lede {
+  margin: 1.75rem 0 0;
+  max-width: 44ch;
+  color: var(--paper-mute);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+/* Dimension line — annotates a fact the way a drawing annotates a length */
+.dimline {
+  margin-top: 2.75rem;
+  display: grid;
+  gap: 0.9rem;
+  max-width: 30rem;
+}
+
+.dim {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  align-items: baseline;
+  gap: 1rem;
+  position: relative;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px dashed var(--cyan-ghost);
+}
+
+.dim:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.dim__key {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+}
+
+.dim__val {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--paper);
+  line-height: 1.5;
+}
+
+.dim__val a { text-decoration: none; border-bottom: 1px solid var(--cyan-dim); }
+.dim__val a:hover { border-bottom-color: var(--cyan); color: var(--cyan-bright); }
+
+/* ---------- General arrangement drawing (hero) ---------- */
+
+.ga {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ga__line {
+  stroke: var(--cyan);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 7px rgba(53, 167, 255, .3));
+}
+
+.ga__construction line {
+  stroke: var(--cyan-dim);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  opacity: .55;
+  vector-effect: non-scaling-stroke;
+}
+
+.ga__ground line {
+  stroke: var(--cyan-dim);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: .75;
+}
+
+/* The sheet draws itself in on load */
+.ga__line > * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.5s cubic-bezier(.65, 0, .35, 1) forwards;
+}
+
+.ga__line .d1 { animation-delay: .10s; animation-duration: 1.9s }
+.ga__line .d2 { animation-delay: .60s }
+.ga__line .d3 { animation-delay: .85s }
+.ga__line .d4 { animation-delay: 1.05s; animation-duration: 1s }
+
+@keyframes draw { to { stroke-dashoffset: 0 } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ga__line > * { animation: none; stroke-dashoffset: 0; }
+}
+
+/* ---------- Section frame ---------- */
+
+.section {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+  border-top: var(--rule);
+}
+
+.section--alt { background: linear-gradient(180deg, rgba(12, 26, 46, .72), rgba(7, 16, 30, .72)); }
+
+.section__head { max-width: 46rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+.section__head .anno { display: block; margin-bottom: 1.1rem; }
+
+.section h2 {
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  letter-spacing: -0.008em;
+}
+
+.section__lede {
+  margin: 1.25rem 0 0;
+  color: var(--paper-mute);
+  max-width: 48ch;
+  font-size: 1.0625rem;
+}
+
+/* ---------- Parts list + detail drawing ---------- */
+
+.parts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .parts { grid-template-columns: 1fr; }
+}
+
+.parts__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--rule);
+}
+
+.part {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: var(--rule);
+  padding: 1.05rem 0.9rem 1.05rem 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: background .18s ease, padding-left .18s ease;
+}
+
+.part:hover, .part.is-active {
+  background: rgba(53, 167, 255, .07);
+  padding-left: 0.9rem;
+}
+
+.part__no {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--cyan-dim);
+  transition: color .18s ease;
+}
+
+.part:hover .part__no, .part.is-active .part__no { color: var(--cyan); }
+
+.part__body { display: block; }
+
+.part__name {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  letter-spacing: 0.015em;
+  line-height: 1.15;
+}
+
+.part__desc {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--paper-mute);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.parts__figure { margin: 0; position: sticky; top: 104px; }
+
+@media (max-width: 1000px) {
+  .parts__figure { position: static; order: -1; margin-bottom: 2rem; }
+}
+
+.parts__figure figcaption { margin-top: 0.9rem; }
+
+/* ---------- Detail drawing ---------- */
+
+.dw {
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dw__car {
+  stroke: var(--cyan-dim);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.bl { cursor: default; }
+
+.bl__lead {
+  stroke: var(--cyan-dim);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+  opacity: .45;
+  transition: opacity .2s ease, stroke .2s ease;
+}
+
+.bl__dot {
+  fill: var(--cyan-dim);
+  stroke: none;
+  opacity: .5;
+  transition: fill .2s ease, opacity .2s ease;
+}
+
+.bl__ring {
+  stroke: var(--cyan-dim);
+  stroke-width: 1.3;
+  fill: var(--ink);
+  vector-effect: non-scaling-stroke;
+  transition: stroke .2s ease, fill .2s ease;
+}
+
+.bl__no {
+  fill: var(--paper-faint);
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  dominant-baseline: central;
+  transition: fill .2s ease;
+}
+
+.bl.is-active .bl__lead { opacity: 1; stroke: var(--cyan); }
+.bl.is-active .bl__dot { fill: var(--cyan); opacity: 1; }
+.bl.is-active .bl__ring { stroke: var(--cyan); fill: rgba(53, 167, 255, .12); }
+.bl.is-active .bl__no { fill: var(--cyan-bright); }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .bl__lead, .bl__dot, .bl__ring, .bl__no, .dw__car, .part { transition: none; }
+}
+
+/* ---------- About ---------- */
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+@media (max-width: 940px) { .about { grid-template-columns: 1fr; } }
+
+.about h2 { font-size: clamp(1.9rem, 4vw, 3rem); margin-top: 1.1rem; }
+
+.creds { margin: 2.75rem 0 0; display: grid; gap: 0; border-top: var(--rule); }
+
+.cred {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: var(--rule);
+}
+
+.cred dt {
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.0625rem;
+  color: var(--cyan-bright);
+}
+
+.cred dd { margin: 0; color: var(--paper-mute); font-size: 0.9375rem; }
+
+.about__plates { display: grid; gap: 1rem; }
+
+.plate { margin: 0; }
+
+.plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--cyan-ghost);
+  filter: saturate(.8) contrast(1.05);
+}
+
+.plate--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
+.plate:not(.plate--tall) img { aspect-ratio: 16 / 7; object-fit: cover; }
+
+.plate figcaption { margin-top: 0.6rem; }
+
+/* ---------- Visit ---------- */
+
+.visit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  border-top: var(--rule);
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+@media (max-width: 880px) { .visit { grid-template-columns: 1fr; } }
+
+.visit__label { display: block; margin-bottom: 1.1rem; color: var(--cyan-dim); }
+
+.visit__phone {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--paper);
+  transition: color .18s ease;
+}
+
+.visit__phone:hover { color: var(--cyan); }
+.visit__cta { margin-top: 1.5rem; }
+
+.hours { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.8125rem; }
+
+.hours th, .hours td {
+  text-align: left;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed var(--cyan-ghost);
+  font-weight: 400;
+}
+
+.hours th { color: var(--cyan-dim); text-transform: uppercase; letter-spacing: 0.14em; width: 4.5rem; }
+.hours td { color: var(--paper); }
+.hours--shut td, .hours--shut th { color: var(--paper-faint); }
+
+.visit__addr {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 1.8;
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+
+.visit__email { margin: 1.25rem 0 0; font-family: var(--mono); font-size: 0.8125rem; }
+.visit__email a { color: var(--paper-mute); text-decoration: none; border-bottom: 1px solid var(--cyan-ghost); }
+.visit__email a:hover { color: var(--cyan-bright); border-bottom-color: var(--cyan); }
+
+/* ---------- Title block (footer) ---------- */
+
+.tb {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--cyan-dim);
+  background: var(--navy);
+}
+
+.tb__inner {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(4, 1fr);
+}
+
+@media (max-width: 880px) { .tb__inner { grid-template-columns: 1fr 1fr; } }
+
+.tb__cell {
+  padding: 1.25rem 1.25rem 1.35rem;
+  border-left: 1px solid var(--cyan-ghost);
+  display: grid;
+  gap: 0.45rem;
+  align-content: start;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--paper-mute);
+  min-height: 86px;
+}
+
+.tb__cell:first-child { border-left: 0; padding-left: 0; }
+
+.tb__cell a { text-decoration: none; }
+.tb__cell a:hover { color: var(--cyan-bright); }
+
+.tb__cell--name strong {
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.0625rem;
+  letter-spacing: 0.05em;
+  color: var(--paper);
+}
+
+/* ---------- Plate that swaps with the selected item ---------- */
+
+.ps { margin-top: 1.75rem; }
+
+.ps__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--cyan-ghost);
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.ps__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .45s ease, transform .7s ease;
+  filter: saturate(.78) contrast(1.06);
+}
+
+.ps__img.is-shown { opacity: 1; transform: scale(1); }
+
+.ps__cap {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0.85rem 0 0;
+  align-items: baseline;
+}
+
+.ps__no { color: var(--cyan); }
+.ps__txt { color: var(--paper-mute); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ps__img { transition: none; transform: none; }
+  .ps__img.is-shown { transform: none; }
+}
+
+@media (max-width: 560px) {
+  .cred { grid-template-columns: 1fr; gap: 0.3rem; }
+  .cred dt { font-size: 1rem; }
+}
+
+/* ---------- Photographic plates ---------- */
+
+.shot { margin: 0; }
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--cyan-ghost);
+}
+
+.shot--hero img { aspect-ratio: 16 / 10; object-fit: cover; }
+
+.shot figcaption { margin-top: 0.75rem; }
+
+/* The detail diagram now sits over a photograph, so the balloon geometry is
+   expressed in the picture's 1600x900 space rather than drawing units. */
+.dw image { opacity: .96; }
+
+.dw .bl__lead { stroke-width: 1.5; }
+.dw .bl__ring { stroke-width: 2; fill: rgba(7, 16, 30, .82); }
+.dw .bl__no { font-size: 34px; }
+.dw .bl__dot { stroke: var(--ink); stroke-width: 2; }
+
+.dw .bl.is-active .bl__ring { fill: rgba(7, 16, 30, .92); }
+
+/* ============================================================
+   Mobile
+   ============================================================ */
+
+.u-visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Menu ---------- */
+
+.burger {
+  display: none;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--cyan-ghost);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.burger:hover { border-color: var(--cyan-dim); background: rgba(53, 167, 255, .06); }
+
+.burger__bars,
+.burger__bars::before,
+.burger__bars::after {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--cyan-bright);
+  transition: transform .22s ease, opacity .18s ease;
+}
+
+.burger__bars { position: relative; }
+.burger__bars::before, .burger__bars::after { content: ""; position: absolute; left: 0; }
+.burger__bars::before { top: -6px; }
+.burger__bars::after  { top: 6px; }
+
+.burger[aria-expanded="true"] .burger__bars { background: transparent; }
+.burger[aria-expanded="true"] .burger__bars::before { transform: translateY(6px) rotate(45deg); }
+.burger[aria-expanded="true"] .burger__bars::after  { transform: translateY(-6px) rotate(-45deg); }
+
+.menu {
+  border-top: var(--rule);
+  background: rgba(7, 16, 30, .97);
+  backdrop-filter: blur(12px);
+  padding: 0 var(--gutter) 0.75rem;
+}
+
+.menu[hidden] { display: none; }
+
+.menu a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  min-height: 56px;
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--cyan-ghost);
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.125rem;
+  text-decoration: none;
+  color: var(--paper);
+}
+
+.menu a:last-child { border-bottom: 0; }
+.menu a:active { color: var(--cyan-bright); }
+.menu .anno { color: var(--cyan-dim); }
+
+@media (max-width: 860px) {
+  .burger { display: inline-flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burger__bars, .burger__bars::before, .burger__bars::after { transition: none; }
+}
+
+/* ---------- Phone and small-tablet layout ---------- */
+
+@media (max-width: 860px) {
+  .titleblock__inner { min-height: 76px; gap: 0.75rem; }
+  .mark img { height: 50px; }
+}
+
+@media (max-width: 560px) {
+  /* Label/value rows read better stacked than squeezed into two columns */
+  .dim { grid-template-columns: 1fr; gap: 0.3rem; }
+  .dim__key { font-size: 0.625rem; }
+
+  .mark img { height: 42px; }
+  .titleblock__inner { min-height: 68px; }
+  .titleblock .btn--call { padding: 0.65rem 0.8rem; font-size: 0.6875rem; letter-spacing: 0.08em; }
+
+  .hero { padding-block: 2.5rem 3rem; }
+  .hero__actions .btn { flex: 1 1 100%; justify-content: center; }
+
+  .visit__block { border-top: 1px dashed var(--cyan-ghost); padding-top: 1.5rem; }
+  .visit__block:first-child { border-top: 0; padding-top: 0; }
+
+  .tb__inner { grid-template-columns: 1fr; }
+  .tb__cell { border-left: 0; border-top: 1px solid var(--cyan-ghost); padding-inline: 0; min-height: 0; }
+  .tb__cell:first-child { border-top: 0; }
+}
+
+/* The annotated diagram is rendered in the photograph's 1600x900 space, so the
+   balloons have to grow as the picture shrinks or they become unreadable. */
+@media (max-width: 1000px) {
+  .dw .bl__ring { r: 58px; stroke-width: 2.5; }
+  .dw .bl__no { font-size: 44px; }
+  .dw .bl__dot { r: 10px; }
+  .dw .bl__lead { stroke-width: 2; }
+}
+
+@media (max-width: 700px) {
+  .dw .bl__ring { r: 64px; stroke-width: 3; }
+  .dw .bl__no { font-size: 50px; }
+  .dw .bl__dot { r: 13px; }
+  .dw .bl__lead { stroke-width: 2.5; stroke-dasharray: 6 8; }
+}
+
+/* ---------- Services on phones ----------
+   The car and its photograph pin to the top of the screen while the list
+   scrolls underneath, so the full-size image still changes with the service
+   you are reading — the same payoff hovering gives on a desktop. */
+
+@media (max-width: 1000px) {
+  .parts__figure {
+    position: sticky;
+    top: 68px;
+    z-index: 2;
+    order: -1;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.85rem;
+    background: var(--ink);
+    box-shadow: 0 14px 22px -14px rgba(7, 16, 30, .95);
+  }
+
+  .section--alt .parts__figure { background: transparent; }
+
+  /* The drawing's own caption is desktop detail; the plate carries its own. */
+  .parts__figure > figcaption { display: none; }
+
+  .ps { display: block; margin-top: 0.7rem; }
+
+  .part { padding-block: 0.95rem; }
+  .part__name { font-size: 1.125rem; }
+  .part__desc { font-size: 0.875rem; }
+}
+
+/* Short screens cannot carry both, so the photograph wins over the diagram. */
+@media (max-width: 1000px) and (max-height: 760px) {
+  .dw { display: none; }
+  .ps { margin-top: 0; }
+}
+
+/* ============================================================
+   Scroll motion
+   Content settles into place as it comes into view, and lifts back out
+   when it leaves, so scrolling either direction feels continuous rather
+   than like a series of jumps. Only applied when JS can undo it.
+   ============================================================ */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity .62s cubic-bezier(.22, .61, .36, 1),
+    transform .72s cubic-bezier(.22, .61, .36, 1);
+  transition-delay: calc(var(--i, 0) * 55ms);
+  will-change: opacity, transform;
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Figures travel a little further and a little slower — they carry more weight */
+.js .hero__figure[data-reveal],
+.js .parts__figure[data-reveal],
+.js .plate[data-reveal] {
+  transform: translate3d(0, 34px, 0) scale(.985);
+  transition-duration: .8s, .9s;
+}
+
+.js .hero__figure[data-reveal].is-in,
+.js .parts__figure[data-reveal].is-in,
+.js .plate[data-reveal].is-in {
+  transform: none;
+}
+
+/* Once an element has had its entrance, drop the compositing hint */
+.js [data-reveal].is-settled { will-change: auto; }
+
+/* The header earns a harder edge once the page is no longer at the top */
+.titleblock { transition: border-color .3s ease, background .3s ease; }
+.titleblock.is-stuck {
+  border-bottom-color: var(--cyan-dim);
+  background: rgba(7, 16, 30, .94);
+}
+
+/* On phones the service list follows the scroll rather than waiting for taps */
+@media (max-width: 1000px) {
+  .part { transition: background .32s ease, padding-left .32s ease; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .titleblock { transition: none; }
+}
+
+/* Pinned space is tight on a phone, so the plate's label sits on the picture */
+@media (max-width: 1000px) {
+  .ps__frame { position: relative; }
+
+  .ps__cap {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    margin: 0;
+    padding: 2.2rem 0.9rem 0.7rem;
+    background: linear-gradient(to top, rgba(7, 16, 30, .92) 30%, transparent);
+    pointer-events: none;
+  }
+
+  .ps__txt { color: var(--paper); }
+}
+
+/* ---------- Moving plates ----------
+   Videos inherit the still plates' framing exactly, so the poster and the clip
+   occupy the same box and nothing shifts when playback starts. */
+
+.shot__media,
+.plate .shot__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--cyan-ghost);
+  background: var(--navy);
+  object-fit: cover;
+}
+
+.shot--hero .shot__media { aspect-ratio: 16 / 10; }
+.plate--tall .shot__media { aspect-ratio: 16 / 10; }
+
+/* Nothing here depends on the clip arriving — the poster carries the frame */
+
+/* ============================================================
+   Sheet 01 — full-bleed background film
+   The clip runs behind the whole opening. A scrim keeps the type
+   legible over whatever frame happens to be on screen, and the
+   drafting grid stays laid over the footage so the sheet reads
+   as a sheet rather than as a stock video header.
+   ============================================================ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: clamp(580px, 88vh, 900px);
+  overflow: hidden;
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ink);
+}
+
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  /* dark where the words are, open where the car is, settling into the page */
+  background:
+    linear-gradient(90deg,
+      rgba(7, 16, 30, .97) 0%,
+      rgba(7, 16, 30, .90) 30%,
+      rgba(7, 16, 30, .42) 62%,
+      rgba(7, 16, 30, .62) 100%),
+    linear-gradient(180deg,
+      rgba(7, 16, 30, .80) 0%,
+      rgba(7, 16, 30, .18) 26%,
+      rgba(7, 16, 30, .30) 62%,
+      var(--ink) 100%);
+}
+
+/* the sheet grid, carried over the footage */
+.hero__scrim::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--cyan-ghost) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyan-ghost) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px;
+  /* Barely there over the footage — enough to say "sheet", not enough to
+     sit on top of the car. */
+  opacity: .22;
+  mask-image: radial-gradient(ellipse 85% 80% at 18% 42%, #000 10%, transparent 70%);
+}
+
+.hero__inner { position: relative; z-index: 1; }
+
+.hero__copy { max-width: 36rem; }
+
+@media (max-width: 860px) {
+  /* A 16:9 frame stretched over a portrait hero crops away most of the car,
+     so on phones the film keeps its own shape as a full-width band and the
+     words sit beneath it rather than on top of it. */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding-block: 0 clamp(3rem, 10vw, 4.5rem);
+    gap: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .hero__bg {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    width: 100%;
+  }
+
+  .hero__video {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* only a fade at the foot, so the band settles into the page */
+  .hero__scrim {
+    background: linear-gradient(180deg,
+      rgba(7, 16, 30, .30) 0%,
+      rgba(7, 16, 30, .06) 42%,
+      rgba(7, 16, 30, .72) 86%,
+      var(--ink) 100%);
+  }
+
+  .hero__scrim::after { display: none; }
+
+  .hero__copy { max-width: none; }
+}

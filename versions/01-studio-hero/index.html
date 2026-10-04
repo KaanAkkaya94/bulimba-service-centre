@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulimba Service Centre — A mechanic you can trust</title>
+<meta name="description" content="Independent mechanical workshop at 41 Michael Street, Bulimba. Logbook servicing, diagnostics, brakes, clutch, cooling and pre-purchase inspections. Call 07 3395 5905.">
+
+<script>document.documentElement.classList.add('js')</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<div class="sheet-grid" aria-hidden="true"></div>
+
+<header class="titleblock">
+  <div class="shell titleblock__inner">
+    <a class="mark" href="#top" aria-label="Bulimba Service Centre — home">
+      <img src="assets/img/logo.png" alt="Bulimba Service Centre" width="374" height="176">
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#workshop">About</a>
+      <a href="#visit">Contact</a>
+    </nav>
+
+    <a class="btn btn--call" href="tel:+61733955905">07 3395 5905</a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="burger__bars" aria-hidden="true"></span>
+      <span class="u-visually-hidden">Menu</span>
+    </button>
+  </div>
+
+  <nav class="menu" id="menu" aria-label="Primary, mobile" hidden>
+    <a href="#services"><span class="anno">01</span> Services</a>
+    <a href="#workshop"><span class="anno">02</span> About the workshop</a>
+    <a href="#visit"><span class="anno">03</span> Visit &amp; contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <video class="hero__video" poster="assets/img/hero.jpg" width="1920" height="1080"
+             muted loop playsinline preload="none" tabindex="-1">
+        <source src="assets/video/hero-studio.mp4" type="video/mp4">
+      </video>
+      <div class="hero__scrim"></div>
+    </div>
+
+    <div class="shell hero__inner">
+      <div class="hero__copy" data-reveal>
+        <p class="anno hero__eyebrow">Sht 01 — Bulimba 4171</p>
+
+        <h1>A mechanic<br>you can <em>trust</em></h1>
+
+        <p class="hero__lede">
+          Independent servicing and repairs on Michael Street. The same workshop
+          looks after your car every time, and you speak to the person doing the work.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--call" href="tel:+61733955905">Call 07 3395 5905</a>
+          <a class="btn btn--line" href="#services">See what we do</a>
+        </div>
+
+        <div class="dimline">
+          <div class="dim">
+            <span class="dim__key">Location</span>
+            <span class="dim__val">41 Michael Street, Bulimba QLD 4171</span>
+          </div>
+          <div class="dim">
+            <span class="dim__key">Open</span>
+            <span class="dim__val">Mon–Thu 8:00–17:00 · Fri 8:00–15:00</span>
+          </div>
+          <div class="dim">
+            <span class="dim__key">Email</span>
+            <span class="dim__val"><a href="mailto:info@bulimbaservicecentre.com">info@bulimbaservicecentre.com</a></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="shell">
+      <header class="section__head" data-reveal>
+        <p class="anno">Sht 02 — Parts &amp; labour</p>
+        <h2>What we work on</h2>
+        <p class="section__lede">
+          Everything on the list is work we do in the bay on Michael Street.
+          Pick an item to see where it lives on the car.
+        </p>
+      </header>
+
+      <div class="parts">
+        <ol class="parts__list">
+          <li data-reveal style="--i:1"><button type="button" class="part" data-item="01">
+            <span class="part__no">01</span>
+            <span class="part__body">
+              <span class="part__name">Vehicle servicing</span>
+              <span class="part__desc">Routine and logbook servicing, on schedule.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:2"><button type="button" class="part" data-item="02">
+            <span class="part__no">02</span>
+            <span class="part__body">
+              <span class="part__name">Diagnostics</span>
+              <span class="part__desc">Scan-tool fault finding, to locate the actual cause.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:3"><button type="button" class="part" data-item="03">
+            <span class="part__no">03</span>
+            <span class="part__body">
+              <span class="part__name">Vehicle inspections</span>
+              <span class="part__desc">A check over the whole car, top to bottom.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:4"><button type="button" class="part" data-item="04">
+            <span class="part__no">04</span>
+            <span class="part__body">
+              <span class="part__name">Pre-purchase inspections</span>
+              <span class="part__desc">An independent look before you commit to a used car.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:5"><button type="button" class="part" data-item="05">
+            <span class="part__no">05</span>
+            <span class="part__body">
+              <span class="part__name">Clutch and brake repairs</span>
+              <span class="part__desc">Pads, discs, clutches and hydraulics.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:6"><button type="button" class="part" data-item="06">
+            <span class="part__no">06</span>
+            <span class="part__body">
+              <span class="part__name">Cooling system repairs</span>
+              <span class="part__desc">Radiators, hoses, thermostats and water pumps.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:7"><button type="button" class="part" data-item="07">
+            <span class="part__no">07</span>
+            <span class="part__body">
+              <span class="part__name">Battery replacements</span>
+              <span class="part__desc">Testing and replacement.</span>
+            </span>
+          </button></li>
+          <li data-reveal style="--i:8"><button type="button" class="part" data-item="08">
+            <span class="part__no">08</span>
+            <span class="part__body">
+              <span class="part__name">Plus much more</span>
+              <span class="part__desc">If it's mechanical, give us a call.</span>
+            </span>
+          </button></li>
+        </ol>
+
+        <figure class="parts__figure" data-reveal>
+          <svg class="dw" viewBox="0 0 1600 900" role="img"
+               aria-label="A sports car in side profile with numbered balloons marking the system each service works on">
+
+            <image href="assets/img/profile.jpg" x="0" y="0" width="1600" height="900"
+                   preserveAspectRatio="xMidYMid slice"/>
+
+            <g class="dw__balloons">
+              <g class="bl" data-item="06">
+                <path class="bl__lead" d="M170 136 L176 548"/>
+                <circle class="bl__dot" cx="176" cy="548" r="8"/>
+                <circle class="bl__ring" cx="170" cy="90" r="46"/>
+                <text class="bl__no" x="170" y="90">06</text>
+              </g>
+              <g class="bl" data-item="07">
+                <path class="bl__lead" d="M330 136 L318 452"/>
+                <circle class="bl__dot" cx="318" cy="452" r="8"/>
+                <circle class="bl__ring" cx="330" cy="90" r="46"/>
+                <text class="bl__no" x="330" y="90">07</text>
+              </g>
+              <g class="bl" data-item="02">
+                <path class="bl__lead" d="M640 136 L694 372"/>
+                <circle class="bl__dot" cx="694" cy="372" r="8"/>
+                <circle class="bl__ring" cx="640" cy="90" r="46"/>
+                <text class="bl__no" x="640" y="90">02</text>
+              </g>
+              <g class="bl" data-item="08">
+                <path class="bl__lead" d="M880 136 L852 302"/>
+                <circle class="bl__dot" cx="852" cy="302" r="8"/>
+                <circle class="bl__ring" cx="880" cy="90" r="46"/>
+                <text class="bl__no" x="880" y="90">08</text>
+              </g>
+              <g class="bl" data-item="01">
+                <path class="bl__lead" d="M1150 136 L1118 422"/>
+                <circle class="bl__dot" cx="1118" cy="422" r="8"/>
+                <circle class="bl__ring" cx="1150" cy="90" r="46"/>
+                <text class="bl__no" x="1150" y="90">01</text>
+              </g>
+              <g class="bl" data-item="05">
+                <path class="bl__lead" d="M560 774 L372 652"/>
+                <path class="bl__lead" d="M560 774 L1270 652"/>
+                <circle class="bl__dot" cx="372" cy="652" r="8"/>
+                <circle class="bl__dot" cx="1270" cy="652" r="8"/>
+                <circle class="bl__ring" cx="560" cy="820" r="46"/>
+                <text class="bl__no" x="560" y="820">05</text>
+              </g>
+              <g class="bl" data-item="03">
+                <path class="bl__lead" d="M900 774 L884 638"/>
+                <circle class="bl__dot" cx="884" cy="638" r="8"/>
+                <circle class="bl__ring" cx="900" cy="820" r="46"/>
+                <text class="bl__no" x="900" y="820">03</text>
+              </g>
+              <g class="bl" data-item="04">
+                <path class="bl__lead" d="M1340 774 L1392 486"/>
+                <circle class="bl__dot" cx="1392" cy="486" r="8"/>
+                <circle class="bl__ring" cx="1340" cy="820" r="46"/>
+                <text class="bl__no" x="1340" y="820">04</text>
+              </g>
+            </g>
+          </svg>
+          <div class="ps">
+            <div class="ps__frame">
+              <img class="ps__img" data-item="01" src="assets/img/engine.jpg" alt="A mid-mounted engine under a glass cover" width="1100" height="825" loading="lazy">
+              <img class="ps__img" data-item="02" src="assets/img/diagnostics.jpg" alt="A diagnostic scan tool lit in a dark workshop" width="1100" height="825" loading="lazy">
+              <img class="ps__img" data-item="03" src="assets/img/lowfront.jpg" alt="A sports car seen from a low front angle" width="1100" height="825" loading="lazy">
+              <img class="ps__img" data-item="04" src="assets/img/underside.jpg" alt="The underside of a car raised on a workshop hoist" width="1200" height="900" loading="lazy">
+              <img class="ps__img" data-item="05" src="assets/img/brakes.jpg" alt="A forged wheel over a drilled brake disc and caliper" width="1100" height="825" loading="lazy">
+              <img class="ps__img" data-item="06" src="assets/img/cooling.jpg" alt="Radiator cooling fins in close up" width="1100" height="825" loading="lazy">
+              <img class="ps__img" data-item="07" src="assets/img/battery.jpg" alt="A battery terminal clamp and cable" width="1100" height="825" loading="lazy">
+              <img class="ps__img" data-item="08" src="assets/img/rear.jpg" alt="A sports car from a low rear angle" width="1100" height="825" loading="lazy">
+            </div>
+            <p class="ps__cap anno"><span class="ps__no">01</span> <span class="ps__txt">Vehicle servicing</span></p>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="workshop">
+    <div class="shell">
+      <div class="about">
+        <div class="about__copy" data-reveal>
+          <p class="anno">Sht 03 — The workshop</p>
+          <h2>Booked in<br>with the people<br>who do the work</h2>
+          <p class="section__lede">
+            Bulimba Service Centre is an independent workshop on Michael Street.
+            Routine servicing, diagnostics and mechanical repairs for the cars
+            people actually drive.
+          </p>
+
+          <dl class="creds">
+            <div class="cred" data-reveal style="--i:1">
+              <dt>Experienced mechanics</dt>
+              <dd>Trained, qualified hands on every job.</dd>
+            </div>
+            <div class="cred" data-reveal style="--i:2">
+              <dt>Quality service</dt>
+              <dd>Done once, and done properly.</dd>
+            </div>
+            <div class="cred" data-reveal style="--i:3">
+              <dt>Affordable prices</dt>
+              <dd>Independent workshop rates.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="about__plates">
+          <figure class="plate plate--tall" data-reveal style="--i:1">
+            <video class="shot__media" poster="assets/img/workshop.jpg" width="1280" height="720"
+                   muted loop playsinline preload="none"
+                   aria-label="A sports car raised on a hoist in a workshop bay">
+              <source src="assets/video/workshop.mp4" type="video/mp4">
+            </video>
+            <figcaption class="anno">Fig. 3 — the bay</figcaption>
+          </figure>
+          <figure class="plate" data-reveal style="--i:2">
+            <img src="assets/img/tools.jpg" alt="Mechanic hand tools laid out on a steel bench" loading="lazy" width="1400" height="788">
+            <figcaption class="anno">Fig. 4 — the bench</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="shell">
+      <header class="section__head" data-reveal>
+        <p class="anno">Sht 04 — Visit</p>
+        <h2>41 Michael Street, Bulimba</h2>
+      </header>
+
+      <div class="visit">
+        <div class="visit__block" data-reveal style="--i:1">
+          <p class="anno visit__label">Call the workshop</p>
+          <a class="visit__phone" href="tel:+61733955905">07 3395 5905</a>
+          <a class="btn btn--call visit__cta" href="tel:+61733955905">Call now</a>
+        </div>
+
+        <div class="visit__block" data-reveal style="--i:2">
+          <p class="anno visit__label">Opening hours</p>
+          <table class="hours">
+            <tbody>
+              <tr><th scope="row">Mon</th><td>8:00 — 17:00</td></tr>
+              <tr><th scope="row">Tue</th><td>8:00 — 17:00</td></tr>
+              <tr><th scope="row">Wed</th><td>8:00 — 17:00</td></tr>
+              <tr><th scope="row">Thu</th><td>8:00 — 17:00</td></tr>
+              <tr><th scope="row">Fri</th><td>8:00 — 15:00</td></tr>
+              <tr class="hours--shut"><th scope="row">Sat</th><td>Closed</td></tr>
+              <tr class="hours--shut"><th scope="row">Sun</th><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="visit__block" data-reveal style="--i:3">
+          <p class="anno visit__label">Find us</p>
+          <address class="visit__addr">
+            41 Michael Street<br>
+            Bulimba QLD 4171<br>
+            Brisbane, Australia
+          </address>
+          <a class="btn btn--line" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&amp;query=41+Michael+Street+Bulimba+QLD+4171">
+            Open in maps
+          </a>
+          <p class="visit__email">
+            <a href="mailto:info@bulimbaservicecentre.com">info@bulimbaservicecentre.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="tb">
+  <div class="shell tb__inner">
+    <div class="tb__cell tb__cell--name">
+      <span class="anno">Drawing title</span>
+      <strong>Bulimba Service Centre</strong>
+    </div>
+    <div class="tb__cell">
+      <span class="anno">Telephone</span>
+      <a href="tel:+61733955905">07 3395 5905</a>
+    </div>
+    <div class="tb__cell">
+      <span class="anno">Location</span>
+      <span>41 Michael St, Bulimba 4171</span>
+    </div>
+    <div class="tb__cell">
+      <span class="anno">Hours</span>
+      <span>Mon–Thu 8–5 · Fri 8–3</span>
+    </div>
+    <div class="tb__cell">
+      <span class="anno">Sheets</span>
+      <span>04 of 04</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+
+</body>
+</html>
