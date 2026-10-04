@@ -1068,39 +1068,45 @@ a { color: inherit; }
 .hero__copy { max-width: 36rem; }
 
 @media (max-width: 860px) {
-  /* A 16:9 frame stretched over a portrait hero crops away most of the car,
-     so on phones the film keeps its own shape as a full-width band and the
-     words sit beneath it rather than on top of it. */
+  /* Stretching a 16:9 frame over a portrait hero crops away most of the car,
+     so instead the film keeps its own shape as a band across the top and the
+     words ride over its lower half. Overlapped like the desktop, but nothing
+     is cut off. */
   .hero {
-    display: flex;
-    flex-direction: column;
+    display: block;
+    position: relative;
     min-height: 0;
     padding-block: 0 clamp(3rem, 10vw, 4.5rem);
-    gap: clamp(1.75rem, 6vw, 2.5rem);
   }
 
   .hero__bg {
-    position: relative;
-    inset: auto;
-    z-index: 0;
-    width: 100%;
-  }
-
-  .hero__video {
+    inset: 0 0 auto 0;      /* a band at the top, not the whole section */
     height: auto;
     aspect-ratio: 16 / 9;
   }
 
-  /* only a fade at the foot, so the band settles into the page */
+  .hero__video { height: 100%; }
+
+  /* 56.25vw is the band's height; start the type a third of the way down it
+     so the headline genuinely sits on the film rather than beneath it */
+  .hero__inner { padding-top: 19vw; }
+
+  /* clear at the top so the car reads, solid by the time the words arrive */
   .hero__scrim {
     background: linear-gradient(180deg,
       rgba(7, 16, 30, .30) 0%,
-      rgba(7, 16, 30, .06) 42%,
-      rgba(7, 16, 30, .72) 86%,
+      rgba(7, 16, 30, .06) 20%,
+      rgba(7, 16, 30, .40) 42%,
+      rgba(7, 16, 30, .78) 66%,
+      rgba(7, 16, 30, .96) 88%,
       var(--ink) 100%);
   }
 
   .hero__scrim::after { display: none; }
 
   .hero__copy { max-width: none; }
+
+  /* sitting on the film now, so it needs more than the faint annotation grey */
+  .hero__eyebrow { color: var(--paper-mute); }
+  .hero__eyebrow::after { background: linear-gradient(90deg, var(--cyan-dim), transparent); }
 }
