@@ -1034,18 +1034,20 @@ a { color: inherit; }
 .hero__scrim {
   position: absolute;
   inset: 0;
-  /* dark where the words are, open where the car is, settling into the page */
+  /* Holds the type side back without blacking the film out — the picture has
+     to stay visible behind the words, not just beside them. */
   background:
-    linear-gradient(90deg,
-      rgba(7, 16, 30, .97) 0%,
-      rgba(7, 16, 30, .90) 30%,
-      rgba(7, 16, 30, .42) 62%,
-      rgba(7, 16, 30, .62) 100%),
     linear-gradient(180deg,
-      rgba(7, 16, 30, .80) 0%,
-      rgba(7, 16, 30, .18) 26%,
-      rgba(7, 16, 30, .30) 62%,
-      var(--ink) 100%);
+      rgba(7, 16, 30, .26) 0%,
+      rgba(7, 16, 30, 0) 30%,
+      rgba(7, 16, 30, 0) 54%,
+      rgba(7, 16, 30, .70) 86%,
+      var(--ink) 100%),
+    linear-gradient(90deg,
+      rgba(7, 16, 30, .70) 0%,
+      rgba(7, 16, 30, .54) 36%,
+      rgba(7, 16, 30, .16) 68%,
+      rgba(7, 16, 30, .34) 100%);
 }
 
 /* the sheet grid, carried over the footage */
@@ -1065,7 +1067,11 @@ a { color: inherit; }
 
 .hero__inner { position: relative; z-index: 1; }
 
-.hero__copy { max-width: 36rem; }
+.hero__copy {
+  max-width: 36rem;
+  /* legible over whatever frame happens to be behind it */
+  text-shadow: 0 1px 2px rgba(7, 16, 30, .55), 0 6px 30px rgba(7, 16, 30, .8);
+}
 
 @media (max-width: 860px) {
   /* Stretching a 16:9 frame over a portrait hero crops away most of the car,
@@ -1094,11 +1100,11 @@ a { color: inherit; }
   /* clear at the top so the car reads, solid by the time the words arrive */
   .hero__scrim {
     background: linear-gradient(180deg,
-      rgba(7, 16, 30, .30) 0%,
-      rgba(7, 16, 30, .06) 20%,
-      rgba(7, 16, 30, .40) 42%,
-      rgba(7, 16, 30, .78) 66%,
-      rgba(7, 16, 30, .96) 88%,
+      rgba(7, 16, 30, .22) 0%,
+      rgba(7, 16, 30, .02) 22%,
+      rgba(7, 16, 30, .34) 44%,
+      rgba(7, 16, 30, .70) 68%,
+      rgba(7, 16, 30, .93) 88%,
       var(--ink) 100%);
   }
 
@@ -1109,4 +1115,31 @@ a { color: inherit; }
   /* sitting on the film now, so it needs more than the faint annotation grey */
   .hero__eyebrow { color: var(--paper-mute); }
   .hero__eyebrow::after { background: linear-gradient(90deg, var(--cyan-dim), transparent); }
+}
+
+/* ---------- Hero as a photograph ----------
+   Used by the version built on the owner's own photos. A still would sit
+   dead next to the filmed versions, so it drifts very slowly instead. */
+
+.hero__still {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  animation: heroDrift 30s ease-in-out infinite alternate;
+}
+
+@keyframes heroDrift {
+  from { transform: scale(1.05) translate3d(0, 0, 0) }
+  to   { transform: scale(1.13) translate3d(-1.6%, -1.2%, 0) }
+}
+
+/* Phone photos are 4:3, so the band follows the picture rather than cropping it */
+@media (max-width: 860px) {
+  .hero--photo .hero__bg { aspect-ratio: 4 / 3; }
+  .hero--photo .hero__inner { padding-top: 41vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__still { animation: none; transform: scale(1.05); }
 }
