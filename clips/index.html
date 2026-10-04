@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulimba Service Centre — the clips</title>
+<meta name="description" content="Every piece of footage generated for the Bulimba Service Centre rebuild, with the page version each one belongs to.">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #07101E; --navy: #0C1A2E;
+    --cyan: #35A7FF; --cyan-bright: #7FC9FF; --cyan-dim: #1F5584; --cyan-ghost: #14314E;
+    --paper: #E8EEF6; --paper-mute: #93A7BF; --paper-faint: #5C738F;
+    --amber: #FFB547;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box }
+  body {
+    margin: 0; background: var(--ink); color: var(--paper);
+    font: 400 16px/1.65 "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 4vw, 3.5rem);
+    -webkit-font-smoothing: antialiased;
+  }
+  .shell { max-width: 1180px; margin-inline: auto }
+  .anno {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .6875rem; letter-spacing: .18em; text-transform: uppercase; color: var(--paper-faint);
+  }
+  h1 {
+    font-family: "Saira Condensed", "Arial Narrow", sans-serif; font-weight: 700;
+    text-transform: uppercase; font-size: clamp(2rem, 6vw, 3.25rem); line-height: .95;
+    letter-spacing: -.008em; margin: .8rem 0 0;
+  }
+  .lede { color: var(--paper-mute); max-width: 54ch; margin: 1.1rem 0 0 }
+  .back {
+    display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.6rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .75rem;
+    letter-spacing: .14em; text-transform: uppercase; text-decoration: none;
+    color: var(--cyan-bright); border: 1px solid var(--cyan-dim); padding: .7rem 1.1rem;
+  }
+  .back:hover { border-color: var(--cyan); background: rgba(53,167,255,.08) }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem); margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  figure { margin: 0 }
+  video {
+    width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover;
+    background: var(--navy); border: 1px solid var(--cyan-ghost);
+  }
+  .meta { display: flex; align-items: baseline; gap: .7rem; margin-top: .85rem; flex-wrap: wrap }
+  .no { color: var(--cyan) }
+  .name {
+    font-family: "Saira Condensed", sans-serif; font-weight: 600; text-transform: uppercase;
+    font-size: 1.125rem; letter-spacing: .02em;
+  }
+  .desc { color: var(--paper-mute); font-size: .9375rem; margin: .35rem 0 0 }
+  .used {
+    display: inline-block; margin-top: .6rem; font-family: "IBM Plex Mono", monospace;
+    font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none; color: var(--amber); border-bottom: 1px solid rgba(255,181,71,.4);
+  }
+  .used:hover { border-bottom-color: var(--amber) }
+  .used.is-none { color: var(--paper-faint); border: 0; pointer-events: none }
+  footer { margin-top: clamp(3rem, 7vw, 5rem); border-top: 1px solid var(--cyan-ghost); padding-top: 1.5rem }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px }
+</style>
+</head>
+<body>
+<div class="shell">
+  <p class="anno">Bulimba Service Centre · generated footage</p>
+  <h1>The clips</h1>
+  <p class="lede">
+    Every piece of film made for the rebuild. Tap any one to play it. Where a clip
+    is used as a page background, the link underneath opens that version of the site.
+  </p>
+  <a class="back" href="../versions/">← All page versions</a>
+
+  <div class="grid">
+    <figure>
+      <video src="../assets/video/hero-pitstop.mp4" poster="../assets/img/hero-pitstop.jpg"
+             muted loop playsinline controls preload="none"></video>
+      <div class="meta"><span class="anno no">01</span><span class="name">Pit stop</span></div>
+      <p class="desc">A car arrives through the haze under floodlights and the crew swarms it. The most action of the four.</p>
+      <a class="used" href="../versions/02-pitstop-hero/">Used in version 02 →</a>
+    </figure>
+
+    <figure>
+      <video src="../assets/video/hero-wheelgun.mp4" poster="../assets/img/hero-wheelgun.jpg"
+             muted loop playsinline controls preload="none"></video>
+      <div class="meta"><span class="anno no">02</span><span class="name">Wheel gun</span></div>
+      <p class="desc">Macro on the gun hitting the centre nut, with sparks. The closest look at actual work being done.</p>
+      <a class="used" href="../versions/03-wheelgun-hero/">Used in version 03 →</a>
+    </figure>
+
+    <figure>
+      <video src="../assets/video/hero-hoist.mp4" poster="../assets/img/hero-hoist.jpg"
+             muted loop playsinline controls preload="none"></video>
+      <div class="meta"><span class="anno no">03</span><span class="name">On the hoist</span></div>
+      <p class="desc">The car settles on the hoist and a mechanic steps in to the front wheel. Quieter, more workshop than racetrack.</p>
+      <a class="used" href="../versions/04-hoist-hero/">Used in version 04 →</a>
+    </figure>
+
+    <figure>
+      <video src="../assets/video/hero-studio.mp4" poster="../assets/img/hero.jpg"
+             muted loop playsinline controls preload="none"></video>
+      <div class="meta"><span class="anno no">04</span><span class="name">Studio push-in</span></div>
+      <p class="desc">Slow camera move on the parked car. No action, pure product shot — a seamless loop.</p>
+      <a class="used" href="../versions/01-studio-hero/">Used in version 01 →</a>
+    </figure>
+
+    <figure>
+      <video src="../assets/video/workshop.mp4" poster="../assets/img/workshop.jpg"
+             muted loop playsinline controls preload="none"></video>
+      <div class="meta"><span class="anno no">05</span><span class="name">The bay</span></div>
+      <p class="desc">Drift forward into the workshop bay, lamp glowing under the car. Runs in the About section of every version.</p>
+      <span class="used is-none">In the About section throughout</span>
+    </figure>
+  </div>
+
+  <footer>
+    <p class="anno">All footage is generated for this mock-up — not film of the actual workshop.</p>
+  </footer>
+</div>
+
+<script>
+  // Play what is on screen, pause what is not, and never load a clip nobody looks at.
+  (() => {
+    const clips = document.querySelectorAll('video');
+    if (!('IntersectionObserver' in window) ||
+        matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        if (isIntersecting) {
+          if (target.preload === 'none') target.preload = 'auto';
+          target.play?.().catch(() => {});
+        } else target.pause?.();
+      }
+    }, { rootMargin: '120px 0px', threshold: 0 });
+    for (const c of clips) io.observe(c);
+  })();
+</script>
+</body>
+</html>
