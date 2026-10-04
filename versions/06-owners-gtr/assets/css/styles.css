@@ -1143,3 +1143,25 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .hero__still { animation: none; transform: scale(1.05); }
 }
+
+/* ---------- Daylight footage ----------
+   The owner's own photographs are bright Brisbane daylight, where the rest of
+   the page is a night workshop. Grading them down lets them sit in the same
+   world and gives the type over them something to hold onto. */
+
+.hero--day .hero__video { filter: brightness(.58) saturate(.88) contrast(1.1); }
+.hero--day .hero__scrim {
+  background:
+    linear-gradient(180deg,
+      rgba(7, 16, 30, .34) 0%,
+      rgba(7, 16, 30, .06) 30%,
+      rgba(7, 16, 30, .10) 54%,
+      rgba(7, 16, 30, .74) 86%,
+      var(--ink) 100%),
+    linear-gradient(90deg,
+      rgba(7, 16, 30, .74) 0%,
+      rgba(7, 16, 30, .58) 36%,
+      rgba(7, 16, 30, .20) 68%,
+      rgba(7, 16, 30, .38) 100%);
+}
+.plate .shot__media.is-day { filter: saturate(.84) contrast(1.06) brightness(.82); }
