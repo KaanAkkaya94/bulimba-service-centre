@@ -163,8 +163,9 @@
   // Play what is on screen, pause what is not, and never load a clip nobody looks at.
   (() => {
     const clips = document.querySelectorAll('video');
-    if (!('IntersectionObserver' in window) ||
-        matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+    // These carry native controls, so a refusal just leaves them tappable.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const io = new IntersectionObserver((entries) => {
       for (const { target, isIntersecting } of entries) {
         if (isIntersecting) {

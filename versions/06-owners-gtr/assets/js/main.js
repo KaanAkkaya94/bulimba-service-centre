@@ -32,32 +32,89 @@
 
 // Moving plates. Nothing is fetched until a clip is actually on screen, and
 // playback stops when it scrolls away, so the page costs no bandwidth or
-// battery for video the reader never sees. The poster frame stands in
-// whenever motion is unwelcome or the clip cannot play.
+// battery for video the reader never sees.
+//
+// Phones refuse autoplay far more often than desktops do — Low Power Mode,
+// Reduce Motion and Data Saver all block it, and mobile Safari will reject a
+// play() issued before any data has arrived. So: load first and play on the
+// data, never assume it worked, and always leave a control behind so a
+// poster frame is a still the reader can start rather than a dead end.
 (() => {
-  const clips = document.querySelectorAll('.shot__media, .hero__video');
-  if (!clips.length) return;
+  const clips = [...document.querySelectorAll('.shot__media, .hero__video')];
+  if (!clips.length || !('IntersectionObserver' in window)) return;
 
   const stillness = matchMedia('(prefers-reduced-motion: reduce)');
-  if (stillness.matches || !('IntersectionObserver' in window)) return;
+
+  const host = (clip) => clip.closest('.plate, .shot, .hero') ?? clip.parentElement;
+
+  const showControl = (clip) => {
+    const parent = host(clip);
+    if (!parent || parent.querySelector('.playpoke')) return;
+    parent.classList.add('has-playpoke');
+
+    const SVG = 'http://www.w3.org/2000/svg';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'playpoke';
+
+    const svg = document.createElementNS(SVG, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    const tri = document.createElementNS(SVG, 'path');
+    tri.setAttribute('d', 'M8 5v14l11-7z');
+    svg.appendChild(tri);
+
+    const label = document.createElement('span');
+    label.textContent = 'Play';
+
+    btn.append(svg, label);
+    btn.addEventListener('click', async () => {
+      try {
+        clip.muted = true;              // a muted clip is allowed far more often
+        if (clip.readyState === 0) clip.load();
+        await clip.play();
+        btn.remove();
+        parent.classList.remove('has-playpoke');
+      } catch { /* leave the control up so it can be tried again */ }
+    });
+    parent.appendChild(btn);
+  };
+
+  const start = async (clip) => {
+    if (stillness.matches) { showControl(clip); return; }
+    clip.muted = true;
+    if (clip.preload === 'none') clip.preload = 'auto';
+
+    // Safari rejects play() issued before any frames exist, so wait for data.
+    if (clip.readyState < 2) {
+      clip.load();
+      await new Promise((resolve) => {
+        const done = () => { clip.removeEventListener('loadeddata', done); resolve(); };
+        clip.addEventListener('loadeddata', done);
+        setTimeout(done, 4000);
+      });
+    }
+    try {
+      await clip.play();
+    } catch {
+      showControl(clip);
+    }
+  };
 
   const io = new IntersectionObserver((entries) => {
     for (const { target, isIntersecting } of entries) {
-      if (isIntersecting) {
-        if (target.preload === 'none') target.preload = 'auto';
-        target.play?.().catch(() => { /* autoplay refused; poster stands in */ });
-      } else {
-        target.pause?.();
-      }
+      if (isIntersecting) start(target);
+      else target.pause?.();
     }
   }, { rootMargin: '150px 0px', threshold: 0 });
 
   for (const clip of clips) io.observe(clip);
 
   stillness.addEventListener('change', (e) => {
-    if (!e.matches) return;
-    io.disconnect();
-    for (const clip of clips) clip.pause();
+    for (const clip of clips) {
+      if (e.matches) { clip.pause(); showControl(clip); }
+      else start(clip);
+    }
   });
 })();
 
