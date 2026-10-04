@@ -1149,7 +1149,8 @@ a { color: inherit; }
    the page is a night workshop. Grading them down lets them sit in the same
    world and gives the type over them something to hold onto. */
 
-.hero--day .hero__video { filter: brightness(.58) saturate(.88) contrast(1.1); }
+.hero--day .hero__video,
+.hero--day .hero__still { filter: brightness(.58) saturate(.88) contrast(1.1); }
 .hero--day .hero__scrim {
   background:
     linear-gradient(180deg,
@@ -1164,4 +1165,5 @@ a { color: inherit; }
       rgba(7, 16, 30, .20) 68%,
       rgba(7, 16, 30, .38) 100%);
 }
-.plate .shot__media.is-day { filter: saturate(.84) contrast(1.06) brightness(.82); }
+.plate .shot__media.is-day,
+.plate img.is-day { filter: saturate(.84) contrast(1.06) brightness(.82); }
