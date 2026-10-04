@@ -1168,47 +1168,6 @@ a { color: inherit; }
 .plate .shot__media.is-day,
 .plate img.is-day { filter: saturate(.84) contrast(1.06) brightness(.82); }
 
-/* ---------- Play control ----------
-   Appears only when a clip could not start itself: Low Power Mode, Reduce
-   Motion, a data saver, or a browser that simply refuses. Without it the
-   poster frame is a dead still with no way in. */
-
+/* Plates and shots stay a positioning context for anything laid over them. */
 .plate, .shot { position: relative; }
 
-.playpoke {
-  position: absolute;
-  right: 0.9rem;
-  bottom: 0.9rem;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.9rem;
-  min-height: 44px;
-  border: 1px solid var(--cyan-dim);
-  background: rgba(7, 16, 30, .86);
-  backdrop-filter: blur(8px);
-  color: var(--cyan-bright);
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: border-color .18s ease, background .18s ease, color .18s ease;
-}
-
-.playpoke:hover { border-color: var(--cyan); background: rgba(12, 26, 46, .94); color: var(--paper); }
-.playpoke svg { width: 14px; height: 14px; fill: currentColor; }
-
-/* On the hero the control sits inside the section, clear of the copy */
-.hero > .playpoke { right: var(--gutter); bottom: clamp(1.25rem, 4vw, 2.25rem); }
-
-@media (max-width: 860px) {
-  /* the film is a band at the top on phones, so the control belongs on it */
-  .hero > .playpoke { right: var(--gutter); bottom: auto; top: calc(56.25vw - 3.6rem); }
-  .hero--photo > .playpoke, .hero--day > .playpoke { top: calc(56.25vw - 3.6rem); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .playpoke { transition: none; }
-}

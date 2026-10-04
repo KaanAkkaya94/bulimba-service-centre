@@ -30,114 +30,51 @@
   });
 })();
 
-// Moving plates. Nothing is fetched until a clip is actually on screen, and
-// playback stops when it scrolls away, so the page costs no bandwidth or
-// battery for video the reader never sees.
-//
-// Phones refuse autoplay far more often than desktops do — Low Power Mode,
-// Reduce Motion and Data Saver all block it, and mobile Safari will reject a
-// play() issued before any data has arrived. So: load first and play on the
-// data, never assume it worked, and always leave a control behind so a
-// poster frame is a still the reader can start rather than a dead end.
+// Moving plates. The clips carry the native autoplay/muted/playsinline
+// combination, which is the one mobile browsers actually honour — driving
+// playback from script alone is what they distrust. This only adds the
+// housekeeping on top: pause what has scrolled away to spare the battery,
+// start it again on the way back, and nudge anything the browser left
+// sitting still.
 (() => {
   const clips = [...document.querySelectorAll('.shot__media, .hero__video')];
   if (!clips.length) return;
 
-  const stillness = matchMedia('(prefers-reduced-motion: reduce)');
-
-  const host = (clip) => clip.closest('.plate, .shot, .hero') ?? clip.parentElement;
-
-  const showControl = (clip) => {
-    const parent = host(clip);
-    if (!parent || parent.querySelector('.playpoke')) return;
-    parent.classList.add('has-playpoke');
-
-    const SVG = 'http://www.w3.org/2000/svg';
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'playpoke';
-
-    const svg = document.createElementNS(SVG, 'svg');
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('aria-hidden', 'true');
-    const tri = document.createElementNS(SVG, 'path');
-    tri.setAttribute('d', 'M8 5v14l11-7z');
-    svg.appendChild(tri);
-
-    const label = document.createElement('span');
-    label.textContent = 'Play';
-
-    btn.append(svg, label);
-    btn.addEventListener('click', async () => {
-      try {
-        clip.muted = true;              // a muted clip is allowed far more often
-        if (clip.readyState === 0) clip.load();
-        await clip.play();
-        btn.remove();
-        parent.classList.remove('has-playpoke');
-      } catch { /* leave the control up so it can be tried again */ }
-    });
-    parent.appendChild(btn);
-  };
-
-  const start = async (clip) => {
-    if (stillness.matches) { showControl(clip); return; }
-    clip.muted = true;
-    if (clip.preload === 'none') clip.preload = 'auto';
-
-    // Safari rejects play() issued before any frames exist, so wait for data.
+  const nudge = (clip) => {
+    clip.muted = true;                       // muted is what buys the autoplay
+    const go = () => clip.play().catch(() => {});
     if (clip.readyState < 2) {
       clip.load();
-      await new Promise((resolve) => {
-        const done = () => { clip.removeEventListener('loadeddata', done); resolve(); };
-        clip.addEventListener('loadeddata', done);
-        setTimeout(done, 4000);
-      });
+      clip.addEventListener('loadeddata', go, { once: true });
+      setTimeout(go, 1200);
+    } else {
+      go();
     }
-    try {
-      await clip.play();
-    } catch {
-      showControl(clip);
-    }
-
-    // An in-app browser can resolve play() and then quietly never advance the
-    // clip, so trust the clock rather than the promise.
-    setTimeout(() => { if (clip.paused) showControl(clip); }, 1400);
   };
 
-  // Some in-app browsers ship without an observer. Rather than silently
-  // showing nothing, just try every clip and let the control catch failures.
   if (!('IntersectionObserver' in window)) {
-    for (const clip of clips) start(clip);
+    for (const clip of clips) nudge(clip);
     return;
   }
 
   const io = new IntersectionObserver((entries) => {
     for (const { target, isIntersecting } of entries) {
-      if (isIntersecting) start(target);
+      if (isIntersecting) nudge(target);
       else target.pause?.();
     }
-  }, { rootMargin: '150px 0px', threshold: 0 });
+  }, { rootMargin: '200px 0px', threshold: 0 });
 
   for (const clip of clips) io.observe(clip);
 
-  // Last resort: if the observer never fires at all, nothing above runs and the
-  // reader is left with dead stills. Sweep once and offer a control on anything
-  // on screen that is still not moving.
+  // A browser can accept the autoplay attribute and still leave the clip
+  // sitting on its first frame. Check back once and start anything on screen
+  // that never got going.
   setTimeout(() => {
     for (const clip of clips) {
       const r = clip.getBoundingClientRect();
-      const onScreen = r.top < innerHeight && r.bottom > 0;
-      if (onScreen && clip.paused) showControl(clip);
+      if (clip.paused && r.top < innerHeight && r.bottom > 0) nudge(clip);
     }
-  }, 3000);
-
-  stillness.addEventListener('change', (e) => {
-    for (const clip of clips) {
-      if (e.matches) { clip.pause(); showControl(clip); }
-      else start(clip);
-    }
-  });
+  }, 2000);
 })();
 
 // Scroll reveal. Elements settle in as they enter view and lift back out as
