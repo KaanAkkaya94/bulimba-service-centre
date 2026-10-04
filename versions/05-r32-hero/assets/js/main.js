@@ -41,7 +41,7 @@
 // poster frame is a still the reader can start rather than a dead end.
 (() => {
   const clips = [...document.querySelectorAll('.shot__media, .hero__video')];
-  if (!clips.length || !('IntersectionObserver' in window)) return;
+  if (!clips.length) return;
 
   const stillness = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -99,7 +99,18 @@
     } catch {
       showControl(clip);
     }
+
+    // An in-app browser can resolve play() and then quietly never advance the
+    // clip, so trust the clock rather than the promise.
+    setTimeout(() => { if (clip.paused) showControl(clip); }, 1400);
   };
+
+  // Some in-app browsers ship without an observer. Rather than silently
+  // showing nothing, just try every clip and let the control catch failures.
+  if (!('IntersectionObserver' in window)) {
+    for (const clip of clips) start(clip);
+    return;
+  }
 
   const io = new IntersectionObserver((entries) => {
     for (const { target, isIntersecting } of entries) {
@@ -109,6 +120,17 @@
   }, { rootMargin: '150px 0px', threshold: 0 });
 
   for (const clip of clips) io.observe(clip);
+
+  // Last resort: if the observer never fires at all, nothing above runs and the
+  // reader is left with dead stills. Sweep once and offer a control on anything
+  // on screen that is still not moving.
+  setTimeout(() => {
+    for (const clip of clips) {
+      const r = clip.getBoundingClientRect();
+      const onScreen = r.top < innerHeight && r.bottom > 0;
+      if (onScreen && clip.paused) showControl(clip);
+    }
+  }, 3000);
 
   stillness.addEventListener('change', (e) => {
     for (const clip of clips) {
