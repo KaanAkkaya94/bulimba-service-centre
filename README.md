@@ -39,6 +39,16 @@ current value and replace it.
 The phone number appears in several places and the `tel:` links are formatted
 differently to the visible text. Change both.
 
+### ⚠️ The phone, address and hours appear twice
+
+Near the top of `index.html` there is a `<script type="application/ld+json">`
+block. It repeats the address, phone number and opening hours in a form Google
+reads directly, which is what lets search results show the hours and a call
+button. It is invisible on the page, so it is easy to forget.
+
+**If you change the hours, the phone or the address, change them there too.**
+Out-of-date details there are worse than none, because Google will publish them.
+
 Then:
 
 ```bash
@@ -140,3 +150,12 @@ add a form unless somebody has agreed to read it.
 **The hero video autoplays** using the native `autoplay muted playsinline`
 attributes. Do not remove any of those three — without them, mobile browsers
 refuse to play it and visitors see a still frame.
+
+**The page title and the shared-link title differ on purpose.** `<title>` names
+the trade and the suburb because that is what people type into Google.
+`og:title` keeps "A mechanic you can trust" because that is what appears when
+somebody shares the link in a message. Do not make them the same again.
+
+**The biggest lever for being found is not in this repository.** For a local
+workshop, a claimed Google Business Profile — hours, photos, reviews — does far
+more than anything in the page head. If that is not set up, start there.
