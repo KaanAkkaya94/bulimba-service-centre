@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bulimba Service Centre — A mechanic you can trust</title>
+<!-- Written for search results. The friendlier tagline lives in og:title below,
+     which is what shows when the link is shared in a message. -->
+<title>Bulimba Service Centre — Mechanic &amp; Car Servicing, Bulimba</title>
 <meta name="description" content="Independent mechanical workshop at 41 Michael Street, Bulimba. Logbook servicing, diagnostics, brakes, clutch, cooling and pre-purchase inspections. Call 07 3395 5905.">
 
 <script>document.documentElement.classList.add('js')</script>
@@ -13,7 +15,7 @@
 <!-- How the link looks when it is shared in a message or on Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Bulimba Service Centre">
-<meta property="og:title" content="Bulimba Service Centre — a mechanic you can trust">
+<meta property="og:title" content="Bulimba Service Centre — A mechanic you can trust">
 <meta property="og:description" content="Independent servicing and repairs on Michael Street, Bulimba. Call 07 3395 5905.">
 <meta property="og:url" content="https://bulimbaservicecentre.com.au/">
 <meta property="og:image" content="https://bulimbaservicecentre.com.au/assets/img/hero-pitstop.jpg">
@@ -21,6 +23,44 @@
 <meta property="og:image:height" content="900">
 <meta property="og:locale" content="en_AU">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- The business details in a form Google can read directly, so results can show
+     the hours and a call button. Nothing here is visible on the page, so if the
+     phone, address or hours change above, change them here too. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "name": "Bulimba Service Centre",
+  "url": "https://bulimbaservicecentre.com.au/",
+  "image": "https://bulimbaservicecentre.com.au/assets/img/hero-pitstop.jpg",
+  "logo": "https://bulimbaservicecentre.com.au/assets/img/logo.png",
+  "telephone": "+61733955905",
+  "email": "info@bulimbaservicecentre.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "41 Michael Street",
+    "addressLocality": "Bulimba",
+    "addressRegion": "QLD",
+    "postalCode": "4171",
+    "addressCountry": "AU"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      "opens": "08:00",
+      "closes": "17:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Friday",
+      "opens": "08:00",
+      "closes": "15:00"
+    }
+  ]
+}
+</script>
 
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
