@@ -1,0 +1,9 @@
+# The live site is the only thing worth indexing. The version comparisons and
+# the clip gallery are working material kept for reference, not pages a
+# customer should land on from a search.
+User-agent: *
+Allow: /
+Disallow: /versions/
+Disallow: /clips/
+
+Sitemap: https://bulimbaservicecentre.com.au/sitemap.xml
